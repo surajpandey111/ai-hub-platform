@@ -1,0 +1,5 @@
+streamlit
+pillow
+requests
+bcrypt
+streamlit-option-menu
