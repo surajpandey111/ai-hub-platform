@@ -3,6 +3,7 @@ from streamlit_option_menu import option_menu
 from auth import *
 from analytics import *
 from PIL import Image
+from agent_llm import detect_intent_llm
 import sqlite3
 
 # Initialize database
@@ -99,7 +100,6 @@ def login_page():
                 st.error("User already exists")
 
 
-# ---------- DASHBOARD ----------
 def dashboard():
 
     with st.sidebar:
@@ -125,48 +125,59 @@ def dashboard():
     if selected == "Home":
 
         st.markdown("<div class='title'>AI Applications</div>", unsafe_allow_html=True)
-        st.markdown("<div class='subtitle'>Choose an AI tool to launch</div>", unsafe_allow_html=True)
+        st.markdown("<div class='subtitle'>Choose or Ask AI</div>", unsafe_allow_html=True)
 
+        # 🤖 AGENT INPUT
+        st.markdown("## 🤖 Smart AI Assistant (Auto Mode)")
+
+        user_query = st.text_input("💬 Ask anything (PDF / Cooking / College Info)")
+
+        if user_query:
+
+            with st.spinner("🤖 Thinking..."):
+
+                intent = detect_intent_llm(user_query)
+
+            if intent == "PDF":
+                st.success("📄 AI Selected: PDF → Excel System")
+                log_usage(st.session_state.username, "PDF→Excel")
+                st.markdown("[🚀 Launch PDF AI](https://gyanmaipdf-to-excel-super-smart.streamlit.app/)")
+
+            elif intent == "COOKING":
+                st.success("🍳 AI Selected: Cooking Assistant")
+                log_usage(st.session_state.username, "Cooking AI")
+                st.markdown("[🚀 Launch Cooking AI](https://smart-cook-ai.streamlit.app/)")
+
+            elif intent == "CHATBOT":
+                st.success("🎓 AI Selected: REC Chatbot")
+                log_usage(st.session_state.username, "REC Bot")
+                st.markdown("[🚀 Launch Chatbot](https://rec-azamgarh-chatbot.streamlit.app/)")
+
+            else:
+                st.warning("❓ Could not understand. Try again.")
+
+        st.markdown("---")
+
+        # 🔁 MANUAL MODE
         col1, col2, col3 = st.columns(3)
 
-        # ---------- PDF TO EXCEL ----------
         with col1:
-
             st.image("assets/research_pdf.png")
-
             if st.button("Open PDF → Excel AI"):
-
                 log_usage(st.session_state.username, "PDF→Excel")
+                st.markdown("[🚀 Launch Application](https://gyanmaipdf-to-excel-super-smart.streamlit.app/)")
 
-                st.markdown(
-                    "[🚀 Launch Application](https://gyanmaipdf-to-excel-super-smart.streamlit.app/)"
-                )
-
-        # ---------- COOKING AI ----------
         with col2:
-
             st.image("assets/cooking.png")
-
             if st.button("Open Cooking AI"):
-
                 log_usage(st.session_state.username, "Cooking AI")
+                st.markdown("[🚀 Launch Application](https://smart-cook-ai.streamlit.app/)")
 
-                st.markdown(
-                    "[🚀 Launch Application](https://smart-cook-ai.streamlit.app/)"
-                )
-
-        # ---------- REC AZAMGARH BOT ----------
         with col3:
-
             st.image("assets/rec_azamgarh.png")
-
             if st.button("Open REC Azamgarh Bot"):
-
                 log_usage(st.session_state.username, "REC Bot")
-
-                st.markdown(
-                    "[🚀 Launch Application](https://rec-azamgarh-chatbot.streamlit.app/)"
-                )
+                st.markdown("[🚀 Launch Application](https://rec-azamgarh-chatbot.streamlit.app/)")
 
     # ---------- ANALYTICS ----------
     if selected == "Analytics":
@@ -180,6 +191,8 @@ def dashboard():
             st.table(data)
         else:
             st.info("No usage data yet.")
+
+  
 
 
 # ---------- RUN APP ----------

@@ -3,3 +3,5 @@ pillow
 requests
 bcrypt
 streamlit-option-menu
+python-dotenv
+google-genai
