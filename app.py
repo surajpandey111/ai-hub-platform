@@ -12,40 +12,84 @@ init_usage()
 
 st.set_page_config(page_title="AI HUB Platform", layout="wide")
 
-# ---------- STYLE ----------
 st.markdown("""
 <style>
 
+/* ---------- GLOBAL BACKGROUND ---------- */
 .stApp{
-background:linear-gradient(135deg,#020617,#0f172a);
-color:white;
+    background:#020617;  /* black/dark */
+    color:white;
 }
 
+/* ---------- WHITE CONTAINERS (LOGIN + INTERNAL) ---------- */
+.block-container{
+    background:white;
+    color:black;
+    padding:30px;
+    border-radius:15px;
+}
+
+/* ---------- CARD UI ---------- */
 .card{
-background:#111827;
-padding:20px;
-border-radius:15px;
-text-align:center;
-transition:0.3s;
+    background:white;
+    color:black;
+    padding:20px;
+    border-radius:15px;
+    text-align:center;
+    transition:0.3s;
+    box-shadow:0px 5px 15px rgba(0,0,0,0.1);
 }
 
 .card:hover{
-transform:scale(1.05);
-box-shadow:0px 0px 20px rgba(0,255,255,0.2);
+    transform:scale(1.05);
+    box-shadow:0px 0px 20px rgba(0,0,0,0.2);
 }
 
+/* ---------- TEXT ---------- */
 .title{
-font-size:42px;
-font-weight:700;
-text-align:center;
-margin-bottom:10px;
+    font-size:42px;
+    font-weight:700;
+    text-align:center;
+    margin-bottom:10px;
+    color:black;
 }
 
 .subtitle{
-text-align:center;
-color:gray;
-font-size:18px;
-margin-bottom:30px;
+    text-align:center;
+    color:#555;
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+/* ---------- INPUT BOXES ---------- */
+input, textarea {
+    background:#f9fafb !important;
+    color:black !important;
+    border-radius:8px !important;
+}
+
+/* ---------- BUTTON ---------- */
+.stButton>button {
+    background:black;
+    color:white;
+    border-radius:8px;
+    padding:8px 15px;
+}
+
+.stButton>button:hover {
+    background:#111827;
+    color:white;
+}
+
+/* ---------- SIDEBAR ---------- */
+section[data-testid="stSidebar"] {
+    background:#020617;
+    color:white;
+}
+
+/* ---------- TAB STYLE ---------- */
+button[data-baseweb="tab"] {
+    color:black;
 }
 
 </style>
