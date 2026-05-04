@@ -5,4 +5,4 @@ bcrypt
 streamlit-option-menu
 python-dotenv
 google-genai
-websockets==10.4
+websockets>=13,<15
